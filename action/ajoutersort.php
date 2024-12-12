@@ -14,10 +14,22 @@ if(isset($_POST["nom"])&&isset($_POST["type"])&&isset($_POST["create_fiche"])){
 $requestSortElement->execute([
 		"nom"=> $nom,
 		"create_fiche"=> $create_fiche,
-		"image"=> $image,
+		"image_sort"=> $image_sort,
 		"id_element"=> $id_element,
 		]);
 
+		if(isset($_FILES["image_sort"])){
+			$imageName=$clean($_FILES["image_sort"]["name"]);
+			$imageInfo= pathinfo($imageName);
+			$imageExtension=$imageInfo["extension"];
+			$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
+			if(in_array($imageExtension,$autoriseExtension)){
+				$img=time() .rand(1,1000); ".".$imageExtension;
+				move_uploaded_file($_FILES["image_sort"]["tmp_name"],"/projet_academie/img".$img);
+			}else{
+				echo "location:/projet_academie/index.php?actionok=1";
+			}
+		}
 include("../general/head.php");
 	}
 ?>

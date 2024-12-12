@@ -2,13 +2,10 @@
 include("general/function.php");
 
 
-
-
 include("general/head.php");
-include("general/nav.php");
-
 ?>
 <body>
+<?php include("general/nav.php")?>;
 	<h1>Académie de Magie</h1>
 
 <!-- afficher un message par rapport aux actions de l'utilisaterur -->

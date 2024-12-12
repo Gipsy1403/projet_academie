@@ -15,8 +15,8 @@ $requestUser->execute([
 
 $tableUser=$requestUser->fetch();
 
-if(verif_mdp($password,$tableUser["password"])){
-	$_SESSION["iduser"]=$tableUser["id-user"];
+if(password_verify($password,$tableUser["password"])){
+	$_SESSION["iduser"]=$tableUser["id_user"];
 		header("location/index.php?actionok=5");
 }else{
 	header("location:login.php?error=1");
@@ -30,8 +30,9 @@ include("../general/head.php");
 
 	<h1>Connexion</h1>
 	<!-- Message d'erreur si l'utilisateur fait une erreur dans sa saisie pour se connecter -->
-	<?php if(isset($_GET["error"]));?>
-	<p>Nom d'utilisateur ou mot de passe incorrect</p>
+	<?php if(isset($_GET["error"])):
+	echo "<p class='error'>Nom d'utilisateur ou mot de passe incorrect</p>";
+	?>
 	<?php endif ?>
 
 	<form action="login.php" method="post">
@@ -40,6 +41,8 @@ include("../general/head.php");
 		<label for="password">Mot de passe</label>
 		<input type="password" name="password" id="password">
 		<button>Se connecter</button>
+		<h2>Toujours pas inscrit ?</h2>
+		<a href="/projet_academie/connexion/inscription.php">Inscrivez-vous</a>
 	</form>
 </body>
 </html>
