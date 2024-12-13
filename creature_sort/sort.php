@@ -9,15 +9,17 @@ $requestSortElement=$bdd->prepare("SELECT *
 $requestSortElement->execute([]);
 
 include("../general/head.php");
-include("../general/nav.php");
+
 
 ?>
 <body>
-	<h2>Les sorts</h2>
-	<h3><a href="/projet_academie/action/ajoutersort.php">Créer une nouveau Sort</a></h3>
+<?php include("../general/nav.php");?>
+	<h1>Les sorts</h1>
+	<h3><a href="/projet_academie/action/ajoutersort.php">Créer un nouveau Sort</a></h3>
 	
-	<?php while($tableSort=$requestSortElement->fetch()):?>
+	
 	<Section id="sort">
+		<?php while($tableSort=$requestSortElement->fetch()):?>
 		<article class="sort">
 			<img src="" alt="">
 			<p><?php $tableSort["nom"] ?>Nom</p>
@@ -28,8 +30,8 @@ include("../general/nav.php");
 			<a href="">Modifier</a>
 			<a href="">Supprimer</a>
 		</article>
+		<?php endwhile ?>
 	</Section>
-<?php endwhile ?>
 
 </body>
 

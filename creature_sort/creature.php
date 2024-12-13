@@ -14,9 +14,10 @@ include("../general/nav.php");
 
 ?>
 <body>
-	<h2>Les créatures</h2>
-	<?php while($tableCreature=$requestCreatureType->fetch()):?>
+	<h1>Les créatures</h1>
+	<h3><a href="/projet_academie/action/ajoutercreature.php">Créer une nouvelle créature</a></h3>
 	<Section id="creature">
+		<?php while($tableCreature=$requestCreatureType->fetch()):?>
 		<article class="creature">
 			<img src="" alt="">
 			<p>Titre</p>
@@ -24,8 +25,8 @@ include("../general/nav.php");
 			<p>Description</p>
 			<p>Fait par : </p>
 		</article>
+		<?php endwhile ?>	
 	</Section>
-<?php endwhile ?>	
 </body>
 
 </html>

@@ -1,28 +1,36 @@
 <?php
 
-include("../general/function.php");
+ $bdd=new PDO("mysql:host=localhost;dbname=projet_academie;port=3307;charset=utf8","root", "");
+ session_start();
+ function clean($input){
+	return htmlspecialchars(trim(strtolower($input)));
+ }
+// include("../general/function.php");
 // je vérifie si les champs ont été saisis
 if(isset($_POST["name"])&&isset($_POST["password"])&&isset($_POST["passwordConfirm"])){
 	$name=clean($_POST["name"]);
 	$password=htmlspecialchars($_POST["password"]);
 	$passwordConfirm=htmlspecialchars($_POST["passwordConfirm"]);
 
- $requestUser=$bdd->prepare("SELECT count (*) as usernb
+$requestUser=$bdd->prepare("SELECT COUNT(*) as usernb
  						FROM user
-						WHERE name= ?");
-$requestUser->execute(array($name));
+						WHERE name=:name");
+$requestUser->execute([
+			"name"=>$name,
+]);
 
 $tableUser=$requestUser->fetch();
+
 if($tableUser["usernb"]>=1){
 	header("location:inscription.php?error=2");
 }else{
 	if($password==$passwordConfirm){
 		$passwordCrypt=password_hash($password,PASSWORD_BCRYPT);
-		$request=$bdd->prepare("INSERT INTO user (name,password)
-							VALUE (:name, :password");
+		$request=$bdd->prepare("INSERT INTO user(name,password)
+							VALUES (:name, :password");
 		$request->execute([
 			"name"=>$name,
-			"password"=>$passwordCrypt
+			"password"=>$passwordCrypt,
 		]);
 		header("location:/projet_academie/index.php?actionok=4");
 

@@ -20,12 +20,12 @@ ul{
 	justify-content: space-around;
 	align-items: center;
 	height: 3rem;
+	
 }
-h1{
-	margin: 2rem;
-	display: flex;
-	justify-content: center;
+a{
+	color: #f9f8ff;
 }
+
 h2{
 	margin: 2rem;
 	font-size: 0.8em;
@@ -37,12 +37,14 @@ section{
 	flex-wrap: wrap;
 	width: 100%;
 	padding: 10px;
+	margin: 1rem;
 }
 
 article{
 	width: 300px;
 	height: 400px;
 	border: 1px solid rgb(98, 67, 114);
+	margin: 1rem;
 }
 .actionok{
 	color: aquamarine;

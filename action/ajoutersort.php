@@ -1,12 +1,34 @@
 <?php
 
 include("../general/function.php");
-
+$requestSortElement=$bdd->prepare("SELECT *
+							FROM sort as s
+							LEFT JOIN element as e
+							ON s.id_element= e.id_element
+							");
+$requestSortElement->execute([]);	
 // je vérifie si les champs ont été saisis
-if(isset($_POST["nom"])&&isset($_POST["type"])&&isset($_POST["create_fiche"])){
+if(isset($_POST["nom"])&&isset($_POST["id_element"])&&isset($_FILES["image_sort"])){
 	$nom=$_POST["nom"];
-	$type=$_POST["type"];
-	$create_fiche=$_POST["create_fiche"];
+	$element=$_POST["id_element"];
+	$image_sort=$_FILES["image_sort"];
+var_dump($_POST);
+
+
+	if(isset($_FILES["image_sort"])){
+		$imageName=$clean($_FILES["image_sort"]["name"]);
+		$imageInfo= pathinfo($imageName);
+		$imageExtension=$imageInfo["extension"];
+		$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
+		if(in_array($imageExtension,$autoriseExtension)){
+			$image_sort=time() .rand(1,1000); ".".$imageExtension;
+			move_uploaded_file($_FILES["image_sort"]["tmp_name"],"/projet_academie/img".$img);
+		}else{
+			header("location:/projet_academie/index.php?actionok=1");
+		}
+	}
+
+
 
  $requestSortElement=$bdd->prepare("INSERT INTO sort
  						(nom,create_fiche, image_sort,id_element)
@@ -18,20 +40,9 @@ $requestSortElement->execute([
 		"id_element"=> $id_element,
 		]);
 
-		if(isset($_FILES["image_sort"])){
-			$imageName=$clean($_FILES["image_sort"]["name"]);
-			$imageInfo= pathinfo($imageName);
-			$imageExtension=$imageInfo["extension"];
-			$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
-			if(in_array($imageExtension,$autoriseExtension)){
-				$img=time() .rand(1,1000); ".".$imageExtension;
-				move_uploaded_file($_FILES["image_sort"]["tmp_name"],"/projet_academie/img".$img);
-			}else{
-				echo "location:/projet_academie/index.php?actionok=1";
-			}
-		}
-include("../general/head.php");
+		
 	}
+	include("../general/head.php");
 ?>
 <body>
 	<?php include("../general/nav.php");?>
@@ -41,8 +52,13 @@ include("../general/head.php");
 		<input type="file" name="image_sort" id="image_sort">
 		<label for="nom">Nom du sort</label>
 		<input type="text" name="nom" id="nom">
-		<label for="element">Type du sort</label>
-		<input type="text" name="element" id="element">
+		<label for="element">Elément du sort</label>
+		<select name="element" id="element">
+			<option value="lumiere">Lumière</option>
+			<option value="eau">Eau</option>
+			<option value="air">Air</option>
+			<option value="feu">Feu</option>
+		</select>
 		<button>Ajouter</button>
 	</form>
 </body>
