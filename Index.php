@@ -1,9 +1,47 @@
 <?php
-include("general/function.php");
+// include("general/function.php");
+session_start();
+// <!-- connexion à la base de donnée -->
 
+ $bdd=new PDO("mysql:host=localhost;dbname=projet_academie;port=3307;charset=utf8","root", "");
+
+//  fonction pour retrait des caractères, espaces et mettre en minuscule
+ function clean($input){
+	return htmlspecialchars(trim(strtolower($input)));
+ }
+
+
+// je vérifie si les champs ont été saisis
+if(isset($_POST["name"])&&isset($_POST["password"])){
+	$name=$_POST["name"];
+	$password=$_POST["password"];
+
+
+$requestUser=$bdd->prepare("SELECT *
+ 						FROM user
+						WHERE name=:name");
+$requestUser->execute([
+		"name"=> $name,
+		"password"=>$password
+		]);
+var_dump($name);
+var_dum($password);
+$tableUser=$requestUser->fetch();
+
+
+
+if(password_verify($password,$tableUser["password"])){
+	// l'identifiant de l'utilisateur est gardé grace à la superglobale $_SESSION
+	$_SESSION["iduser"]=$tableUser["id_user"];
+		header("location:index.php?actionok=5");
+}else{
+	header("location:index.php?error=1");
+}
+}
 
 include("general/head.php");
 ?>
+
 <body>
 <?php include("general/nav.php")?>;
 	<h1>Académie de Magie</h1>
@@ -20,29 +58,27 @@ include("general/head.php");
 	Entrez, apprenti magicien, et laissez la magie opérer. Votre légende commence ici.
 </p>
 
+
+<h2>Connexion</h2>
+<!-- Message d'erreur si l'utilisateur fait une erreur dans sa saisie pour se connecter -->
+<?php if(isset($_GET["error"])):
+echo "<p class='error'>Nom d'utilisateur ou mot de passe incorrect</p>";
+?>
+<?php endif ?>
+
+<form action="login.php" method="post">
+	<label for="name">Nom</label>
+	<input type="text" name="name" id="name">
+	<label for="password">Mot de passe</label>
+	<input type="password" name="password" id="password">
+	<button>Se connecter</button>
+	<h2>Toujours pas inscrit ?</h2>
+	<a href="/projet_academie/connexion/inscription.php">Inscrivez-vous</a>
+</form>
+
 <!-- afficher un message par rapport aux actions de l'utilisaterur -->
 
-<?php 
-if(isset($_GET["actionok"])){
-	switch($_GET["actionok"]){
-	case 1:
-		echo "<p class='actionok'>La fiche a bien été ajoutée</p>";
-		break;
-	case 2:
-		echo "<p class='actionok'>La fiche a bien été modifiée</p>";
-		break;
-	case 3:
-		echo "<p class='actionok'>La fiche a bien été supprimée</p>";
-		break;
-	case 4:
-		echo "<p class='actionok'>Super !! Vous êtes inscrit</p>";
-		break;
-	case 5:
-		echo "<p class='actionok'>Bienvenue</p>";
-		break;
-}
-}
-?>
+
 
 </body>
 

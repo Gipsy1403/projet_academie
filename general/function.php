@@ -10,3 +10,4 @@
  function clean($input){
 	return htmlspecialchars(trim(strtolower($input)));
  }
+ ?>

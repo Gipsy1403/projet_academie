@@ -11,6 +11,7 @@ if(isset($_POST["name"])&&isset($_POST["password"])&&isset($_POST["passwordConfi
 	$name=clean($_POST["name"]);
 	$password=htmlspecialchars($_POST["password"]);
 	$passwordConfirm=htmlspecialchars($_POST["passwordConfirm"]);
+	$id_role=1;
 
 $requestUser=$bdd->prepare("SELECT COUNT(*) as usernb
  						FROM user
@@ -26,11 +27,12 @@ if($tableUser["usernb"]>=1){
 }else{
 	if($password==$passwordConfirm){
 		$passwordCrypt=password_hash($password,PASSWORD_BCRYPT);
-		$request=$bdd->prepare("INSERT INTO user(name,password)
-							VALUES (:name, :password");
+		$request=$bdd->prepare("INSERT INTO user(name,password,id_role)
+							VALUES (:name, :password, :id_role)");
 		$request->execute([
 			"name"=>$name,
 			"password"=>$passwordCrypt,
+			"id_role"=>$id_role
 		]);
 		header("location:/projet_academie/index.php?actionok=4");
 
