@@ -24,9 +24,9 @@ if($_SESSION["userid"]==$tableUser["id_user"]){
 		]);
 	header("location:/projet_academie/creature_sort/sort.php?actionok=3");
 	exit();
-}else{
-	header("location:/projet_academie/creature_sort/sort.php");
-}
+	}else{
+		header("location:/projet_academie/creature_sort/sort.php");
+	}
 }else{
 	header("location:/projet_academie/creature_sort/sort.php");
 }

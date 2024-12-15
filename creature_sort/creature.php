@@ -9,23 +9,16 @@ $requestCreatureType=$bdd->prepare("SELECT *
 $requestCreatureType->execute([]);
 
 if(isset($_GET["actionok"])){
-	switch($_GET["actionok"]){
-	case 1:
-		echo "<p class='actionok'>La fiche a bien été ajoutée</p>";
-		break;
-	case 2:
-		echo "<p class='actionok'>La fiche a bien été modifiée</p>";
-		break;
-	case 3:
-		echo "<p class='actionok'>La fiche a bien été supprimée</p>";
-		break;
-	case 4:
-		echo "<p class='actionok'>Super !! Vous êtes inscrit</p>";
-		break;
-	case 5:
-		echo "<p class='actionok'>Bienvenue</p>";
-		break;
-}
+	$messages=[
+		1=>"La fiche a bien été ajoutée",
+		2=>"La fiche a bien été modifiée",
+		3=>"La fiche a bien été supprimée",
+		4=>"Super !! Vous êtes inscrit",
+		5=>"Bienvenue",
+	];
+	if(array_key_exists($_GET["actionok"],$messsages)){
+		echo"<p class='actionok'>".($messages[$_GET["actionok"]])."<p>";
+	}	
 }
 
 include("../general/head.php");
@@ -42,22 +35,22 @@ include("../general/head.php");
 		<?php if($tableCreature['image_creature']==NULL):?>
 				<img src="../img/no_image.png" alt="">
 			<?php else:?>
-				<img src="../img/sorts/ <?php echo $tableCreature["image_creature"];?>"alt="<?php echo $tableCreature["image_creature"]["name"];?>">
-			<?php endif?>	
+				<img src="../img/creatures/ <?php echo $tableCreature["image_creature"];?>">
+			<?php endif;?>	
 			
-			<p><?php $tableCreature["nom"] ?>Titre</p>
-			<p><?php $tableCreature["id_type"] ?>Type</p>
-			<p><?php $tableCreature["description"] ?>Description</p>
-			<p><?php $tableCreature["id_user"] ?>Fait par : </p>
+			<p><?php $tableCreature["nom"];?>Titre</p>
+			<p><?php $tableCreature["id_type"];?>Type</p>
+			<p><?php $tableCreature["description"];?>Description</p>
+			<p><?php $tableCreature["id_user"];?>Fait par : </p>
 			<?php if(isset($_SESSION["userid"])):?>
 	<?php if($_SESSION["userid"]==$tableCreature["id_user"]):?>
-			<a href="/projet-academie/action/modifiercreature.php<?php echo $tableCreature["id_creature"]?>">Modifier</a>
-			<a href="/projet-academie/action/supprimercreature.php<?php echo $tableCreature["id_creature"]?>">Supprimer</a>
-			<?php endif?>
-			<?php endif?>
+			<a href="/projet-academie/action/modifiercreature.php?id=<?php echo $tableCreature["id_creature"];?>">Modifier</a>
+			<a href="/projet-academie/action/supprimercreature.php?id=<?php echo $tableCreature["id_creature"];?>">Supprimer</a>
+			<?php endif;?>
+			<?php endif;?>
 
 		</article>
-		<?php endwhile ?>	
+		<?php endwhile;?>	
 	</Section>
 </body>
 

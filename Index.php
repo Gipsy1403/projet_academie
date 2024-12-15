@@ -13,7 +13,7 @@ session_start();
 
 // je vérifie si les champs ont été saisis
 if(isset($_POST["name"])&&isset($_POST["password"])){
-	$name=$_POST["name"];
+	$name=clean($_POST["name"]);
 	$password=$_POST["password"];
 
 
@@ -22,15 +22,13 @@ $requestUser=$bdd->prepare("SELECT *
 						WHERE name=:name");
 $requestUser->execute([
 		"name"=> $name,
-		"password"=>$password
 		]);
-var_dump($name);
-var_dum($password);
+
 $tableUser=$requestUser->fetch();
 
 
 
-if(password_verify($password,$tableUser["password"])){
+if($tableUser && password_verify($password,$tableUser["password"])){
 	// l'identifiant de l'utilisateur est gardé grace à la superglobale $_SESSION
 	$_SESSION["iduser"]=$tableUser["id_user"];
 		header("location:index.php?actionok=5");
@@ -62,23 +60,20 @@ include("general/head.php");
 <h2>Connexion</h2>
 <!-- Message d'erreur si l'utilisateur fait une erreur dans sa saisie pour se connecter -->
 <?php if(isset($_GET["error"])):
-echo "<p class='error'>Nom d'utilisateur ou mot de passe incorrect</p>";
-?>
-<?php endif ?>
+	echo "<p class='error'>Nom d'utilisateur ou mot de passe incorrect</p>";
+	?>
+<?php endif;?>
 
-<form action="login.php" method="post">
+<form action="index.php" method="post">
 	<label for="name">Nom</label>
 	<input type="text" name="name" id="name">
 	<label for="password">Mot de passe</label>
 	<input type="password" name="password" id="password">
 	<button>Se connecter</button>
-	<h2>Toujours pas inscrit ?</h2>
-	<a href="/projet_academie/connexion/inscription.php">Inscrivez-vous</a>
 </form>
 
-<!-- afficher un message par rapport aux actions de l'utilisaterur -->
-
-
+<h2>Toujours pas inscrit ?</h2>
+<a href="/projet_academie/connexion/inscription.php">Inscrivez-vous</a>
 
 </body>
 

@@ -9,24 +9,18 @@ $requestSortElement=$bdd->prepare("SELECT *
 $requestSortElement->execute([]);
 
 if(isset($_GET["actionok"])){
-	switch($_GET["actionok"]){
-	case 1:
-		echo "<p class='actionok'>La fiche a bien été ajoutée</p>";
-		break;
-	case 2:
-		echo "<p class='actionok'>La fiche a bien été modifiée</p>";
-		break;
-	case 3:
-		echo "<p class='actionok'>La fiche a bien été supprimée</p>";
-		break;
-	case 4:
-		echo "<p class='actionok'>Super !! Vous êtes inscrit</p>";
-		break;
-	case 5:
-		echo "<p class='actionok'>Bienvenue</p>";
-		break;
+	$messages=[
+		1=>"La fiche a bien été ajoutée",
+		2=>"La fiche a bien été modifiée",
+		3=>"La fiche a bien été supprimée",
+		4=>"Super !! Vous êtes inscrit",
+		5=>"Bienvenue",
+	];
+	if(array_key_exists($_GET["actionok"],$messsages)){
+		echo"<p class='actionok'>".($messages[$_GET["actionok"]])."<p>";
+	}	
 }
-}
+
 include("../general/head.php");
 
 ?>
@@ -39,21 +33,22 @@ include("../general/head.php");
 	<Section id="sort">
 		<?php while($tableSort=$requestSortElement->fetch()):?>
 		<article class="sort">
-			<?php if($tableSort['image_sort']==NULL):?>
-				<img src="../img/no_image.png" alt="">
-			<?php else:?>
-				<img src="../img/sorts/ <?php echo $tableSort["image_sort"];?>"alt="<?php echo $tableSort["image_sort"]["name"];?>">
-			<?php endif?>
-			<p><?php $tableSort["nom"] ?>Nom</p>
-			<p><?php $tableSort["id_element"] ?>Element</p>
-			<p><?php $tableSort["id_user"] ?>Fait par : </p>
+			<?php if($tableSort['image_sort']==NULL){
+				echo '<img src="../img/no_image.png" alt="Aucune image">';
+			}else{
+				echo '<img src="../img/'.$tableSort["image_sort"].'" alt="' .$tableSort["nom"] . '">';
+			};
+				?>
+			<p><?php echo $tableSort["nom"]; ?>Nom</p>
+			<p><?php echo $tableSort["id_element"];?>Element</p>
+			<p><?php echo $tableSort["id_user"]; ?>Fait par : </p>
 			<p>Spécialistes</p>
-<?php if(isset($_SESSION["userid"])):?>
-	<?php if($_SESSION["userid"]==$tableSort["id_user"]):?>
-			<a href="/projet-academie/action/modifiersort.php<?php echo $tablesort["id_sort"]?>">Modifier</a>
-			<a href="/projet-academie/action/supprimersort.php<?php echo $tablesort["id_sort"]?>">Supprimer</a>
-			<?php endif?>
-			<?php endif?>
+			<?php if(isset($_SESSION["userid"])):?>
+				<?php if($_SESSION["userid"]==$tableSort["id_user"]):?>
+					<a href="/projet-academie/action/modifiersort.php?id=<?php echo $tableSort["id_sort"];?>">Modifier</a>
+					<a href="/projet-academie/action/supprimersort.php?id=<?php echo $tableSort["id_sort"];?>">Supprimer</a>
+				<?php endif;?>
+			<?php endif;?>
 		</article>
 		<?php endwhile ;?>
 	</Section>

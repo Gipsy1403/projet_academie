@@ -92,7 +92,7 @@ include("../general/head.php");
 <body>
 	<?php include("../general/nav.php");?>
 
-	<form action="ajoutercreature.php" method="post" enctype="multipart/form-data">
+	<form action="modifiercreature.php" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id_creature" id="id_creature" value="<?php echo $tableCreature["id_creature"];?>">
 		<label for="image_creature">Image de la Créature</label>
 		<input type="file" name="image_creature" id="image_creature">

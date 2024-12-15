@@ -47,15 +47,15 @@ include("../general/head.php");
 <body>
 	<?php include("../general/nav.php");?>
 	<h1>Inscription</h1>
-	<?php if(isset($_GET["error"])){ ?>
-		<?php switch($_GET["error"]){
-			case 1:
-				echo "<p class='error'>Bos mots de passe ne correspondent pas</p>";
-				break;
-			case 2:
-				echo "<p class='error'>Ce nom d'utilisateur existe déjà</p>";
-				break;
+	<?php if(isset($_GET["error"])){ 
+		$error= [
+			1 => "Vos mots de passe ne correspondent pas.",
+			2 => "Ce nom d'utilisateur existe déjà."
+			];
+		if (isset($_GET["error"]) && isset($error[$_GET["error"]])) {
+		echo "<p class='error'>" . htmlspecialchars($error[$_GET["error"]]) . "</p>";
 		}
+
 	}?>
 <form action="inscription.php" method="post">
 	<label for="name">Nom</label>
