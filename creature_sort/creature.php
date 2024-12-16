@@ -1,12 +1,12 @@
 <?php
 include("../general/function.php");
 
-$requestCreatureType=$bdd->prepare("SELECT c.*,t.nom AS nom_type,u.nom AS nom_user
+$requestCreatureType=$bdd->prepare("SELECT c.*,t.nom AS nom_type, u.name AS username
 				FROM creature as c
 				LEFT JOIN type as t
 				ON c.id_type= t.id_type
 				LEFT JOIN user AS u
-                	ON s.id_user = u.id_user
+                	ON c.id_user = u.id_user
 				");
 $requestCreatureType->execute([]);
 
@@ -18,7 +18,7 @@ if(isset($_GET["actionok"])){
 		4=>"Super !! Vous êtes inscrit",
 		5=>"Bienvenue",
 	];
-	if(array_key_exists($_GET["actionok"],$messsages)){
+	if(array_key_exists($_GET["actionok"],$messages)){
 		echo"<p class='actionok'>".($messages[$_GET["actionok"]])."<p>";
 	}	
 }
@@ -41,9 +41,9 @@ include("../general/head.php");
 			<?php endif;?>	
 			
 			<p><?php $tableCreature["nom"];?>Titre</p>
-			<p><?php $tableCreature["id_type"];?>Type</p>
+			<p><?php $tableCreature["nom_type"];?>Type</p>
 			<p><?php $tableCreature["description"];?>Description</p>
-			<p><?php $tableCreature["id_user"];?>Fait par : </p>
+			<p><?php $tableCreature["username"];?>Fait par : </p>
 			<?php if(isset($_SESSION["userid"])):?>
 	<?php if($_SESSION["userid"]==$tableCreature["id_user"]):?>
 			<a href="/projet-academie/action/modifiercreature.php?id=<?php echo $tableCreature["id_creature"];?>">Modifier</a>

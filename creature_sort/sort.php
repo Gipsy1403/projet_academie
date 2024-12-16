@@ -1,7 +1,7 @@
 <?php
 include("../general/function.php");
 
-$requestSortElement=$bdd->prepare("SELECT s.*, e.nom AS nom_element, u.nom AS nom_user
+$requestSortElement=$bdd->prepare("SELECT s.*, e.nom AS nom_element, u.name AS username
                 FROM sort AS s
                 LEFT JOIN element AS e
                 ON s.id_element = e.id_element
@@ -19,7 +19,7 @@ if(isset($_GET["actionok"])){
 		4=>"Super !! Vous êtes inscrit",
 		5=>"Bienvenue",
 	];
-	if(array_key_exists($_GET["actionok"],$messsages)){
+	if(array_key_exists($_GET["actionok"],$messages)){
 		echo"<p class='actionok'>".($messages[$_GET["actionok"]])."<p>";
 	}	
 }
@@ -36,15 +36,16 @@ include("../general/head.php");
 	<Section id="sort">
 		<?php while($tableSort=$requestSortElement->fetch()):?>
 		<article class="sort">
-			<?php if($tableSort['image_sort']==NULL){
-				echo '<img src="../img/no_image.png" alt="Aucune image">';
-			}else{
-				echo '<img src="../img/'.$tableSort["image_sort"].'" alt="' .$tableSort["nom"] . '">';
-			};
-				?>
-			<p><?php echo $tableSort["nom"]; ?>Nom</p>
-			<p><?php echo $tableSort["id_element"];?>Element</p>
-			<p><?php echo $tableSort["id_user"]; ?>Fait par : </p>
+			<?php 
+				
+			if($tableSort['image_sort']==NULL):?>
+				<img src="../img/no_image.png" alt="Aucune image">
+			<?php else:?>
+				<img src="<?="../img/".$tableSort['image_sort']?>" alt="<?=$tableSort["nom"] ?>">
+			<?php endif;?>
+			<p><?php echo $tableSort["nom"]; ?></p>
+			<p><?php echo $tableSort["nom_element"];?></p>
+			<p>Ajouté par : <?php echo $tableSort["username"]; ?></p>
 			<p>Spécialistes</p>
 			<?php if(isset($_SESSION["userid"])):?>
 				<?php if($_SESSION["userid"]==$tableSort["id_user"]):?>
