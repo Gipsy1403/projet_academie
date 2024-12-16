@@ -1,7 +1,7 @@
 <?php
 include("../general/function.php");
 
-$requestCreatureType=$bdd->prepare("SELECT c.*,t.nom AS nom_type, u.name AS username
+$requestCreatureType=$bdd->prepare("SELECT c.*, t.nom AS nom_type, u.name AS username
 				FROM creature as c
 				LEFT JOIN type as t
 				ON c.id_type= t.id_type
@@ -35,17 +35,17 @@ include("../general/head.php");
 		<?php while($tableCreature=$requestCreatureType->fetch()):?>
 		<article class="creature">
 		<?php if($tableCreature['image_creature']==NULL):?>
-				<img src="../img/no_image.png" alt="">
-			<?php else:?>
-				<img src="../img/creatures/ <?php echo $tableCreature["image_creature"];?>">
-			<?php endif;?>	
+				<img src="../img/no_image.png" alt="Aucune image">
+				<?php else:?>
+					<img src="<?="../img/".$tableCreature['image_creature']?>" alt="<?=$tableCreature["nom"] ?>">
+			<?php endif;?>
 			
-			<p><?php $tableCreature["nom"];?>Titre</p>
-			<p><?php $tableCreature["nom_type"];?>Type</p>
-			<p><?php $tableCreature["description"];?>Description</p>
-			<p><?php $tableCreature["username"];?>Fait par : </p>
-			<?php if(isset($_SESSION["userid"])):?>
-	<?php if($_SESSION["userid"]==$tableCreature["id_user"]):?>
+			<p><?php echo $tableCreature["nom"];?></p>
+			<p><?php echo $tableCreature["nom_type"];?></p>
+			<p>Description :<?php echo $tableCreature["description"];?></p>
+			<p>Ajoutée par :<?php echo $tableCreature["username"];?> </p>
+			<?php if(isset($_SESSION["iduser"])):?>
+		<?php if($_SESSION["iduser"]==$tableCreature["id_user"]):?>
 			<a href="/projet-academie/action/modifiercreature.php?id=<?php echo $tableCreature["id_creature"];?>">Modifier</a>
 			<a href="/projet-academie/action/supprimercreature.php?id=<?php echo $tableCreature["id_creature"];?>">Supprimer</a>
 			<?php endif;?>

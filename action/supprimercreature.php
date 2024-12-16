@@ -14,8 +14,9 @@ $requestRead->execute([
 
 $tableCreature=$requestRead->fetch();
 
-if($_SESSION["userid"]==$tableUser["id_user"]){
-	unlink("../img/creatures".$tableCreature["image_creature"]);
+if($_SESSION["iduser"]==$tableUser["id_user"]){
+	unlink("../img/".$tableCreature["image_creature"]);
+	
 	$request=$bdd->prepare("DELETE FROM creature
 						WHERE id_creature=:id_creature
 						");

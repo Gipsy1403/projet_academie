@@ -15,7 +15,7 @@ $requestRead->execute([
 
 $tableSort=$requestRead->fetch();
 
-if($_SESSION["userid"]!=$tableUser["id_user"]){
+if($_SESSION["iduser"]!=$tableUser["id_user"]){
 	header("location:/projet_academie/index.php");
 }else{
 	header("location:/projet_academie/creature-sort/sort.php");
@@ -37,7 +37,7 @@ $request->execute([
 
 $tableSort=$request->fetch();
 
-if($_SESSION["userid"]==$tableUser["id_user"]){
+if($_SESSION["iduser"]==$tableUser["id_user"]){
 	if($_FILES["image_sort"]["error"]===UPLOAD_ERR_NO_FILE){
 
 		$request=$bdd->prepare('UPDATE sort
@@ -61,7 +61,7 @@ header("location:/projet_acsort_sort/creature.php?actionok=2");
 		$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
 		if(in_array($imageExtension,$autoriseExtension)){
 			$imagesort=time() .rand(1,1000); ".".$imageExtension;
-			move_uploaded_file($_FILES["image_sort"]["tmp_name"],"/projet_academie/img/sorts".$imagesort);
+			move_uploaded_file($_FILES["image_sort"]["tmp_name"],"/projet_academie/img/".$imagesort);
 		unlink("/projet_academie/img/sorts";$tableSort["image_sort"]);
 		}else{
 			// header ("location:/projet_academie/creature.php?actionok=1");

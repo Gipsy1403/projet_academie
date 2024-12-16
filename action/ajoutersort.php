@@ -15,19 +15,21 @@ if(isset($_POST["nom"])&&isset($_POST["id_element"])&&isset($_SESSION["iduser"])
 		if(in_array($imageExtension,$autoriseExtension)){
 			$imagesort=time() .rand(1,1000). ".".$imageExtension;
 		
-			move_uploaded_file($_FILES["image_sort"]["tmp_name"],"../img/sorts".$imagesort);
+			move_uploaded_file($_FILES["image_sort"]["tmp_name"],"../img/".$imagesort);
 		}else{
 			header("location:../creature_sort/sort.php?actionok=1");
 		}
 	}
 
-	echo $iduser;
-$requestSortElement=$bdd->prepare("SELECT *
-							FROM sort as s
-							LEFT JOIN element as e
-							ON s.id_element= e.id_element
-							");
-$requestSortElement->execute([]);	
+
+$requestSortElement=$bdd->prepare("SELECT s.*, e.nom AS nom_element, u.name AS username
+								FROM sort AS s
+								LEFT JOIN element AS e
+								ON s.id_element = e.id_element
+								LEFT JOIN user AS u
+								ON s.id_user = u.id_user
+								");
+$requestSortElement->execute([]);
 
 $requestSortEl=$bdd->prepare("INSERT INTO sort(nom, image_sort,id_element, id_user)
 						VALUES (:nom, :image_sort, :id_element, :id_user)");

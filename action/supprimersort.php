@@ -14,8 +14,8 @@ $requestRead->execute([
 
 $tableSort=$requestRead->fetch();
 
-if($_SESSION["userid"]==$tableUser["id_user"]){
-	unlink("../img/sorts".$tableSort["image_sort"]);
+if($_SESSION["iduser"]==$tableUser["id_user"]){
+	unlink("../img/".$tableSort["image_sort"]);
 	$request=$bdd->prepare("DELETE FROM sort
 						WHERE id_sort=:id_sort
 						");

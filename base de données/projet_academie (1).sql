@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3307
--- Généré le : dim. 15 déc. 2024 à 12:25
+-- Généré le : lun. 16 déc. 2024 à 16:23
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -41,7 +41,14 @@ CREATE TABLE `creature` (
 --
 
 INSERT INTO `creature` (`id_creature`, `nom`, `description`, `image_creature`, `id_user`, `id_type`) VALUES
-(17, 'Eclair', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734256824761', 8, 0);
+(20, 'Kirin', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734357613950', 8, 0),
+(21, 'Cerbère', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734357804845', 9, 0),
+(22, 'harpie', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734357958145', 9, 0),
+(23, 'Elementaire eau', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734358145267', 10, 0),
+(24, 'Centaure', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734359558597', 11, 0),
+(25, 'Kappa', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734359587114', 11, 0),
+(26, 'Seigneur des abimes', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734359777618', 12, 0),
+(27, 'liche', 'n sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme ', '1734360009464', 13, 0);
 
 -- --------------------------------------------------------
 
@@ -102,12 +109,17 @@ CREATE TABLE `sort` (
 --
 
 INSERT INTO `sort` (`id_sort`, `nom`, `image_sort`, `id_element`, `id_user`) VALUES
-(27, 'Eclair', '173425373648.webp', 0, 8),
-(28, 'Eclair', '1734255247752.webp', 0, 8),
-(29, 'Eclair', '1734256709451.webp', 0, 8),
-(30, 'Elementaire d\'air', '1734260171131.webp', 0, 8),
-(31, 'Eclair', '1734260406749.webp', 0, 8),
-(32, 'Eclair', '1734261531710.webp', 0, 8);
+(39, 'Blizzard', '1734357415448.webp', 0, 8),
+(40, 'Cercle de l\'hiver', '1734357478931.webp', 0, 8),
+(41, 'Boule de feu', '1734357712680.webp', 0, 9),
+(42, 'Tempête de feu', '1734357733985.webp', 0, 9),
+(43, 'Retribution', '1734357875230.webp', 0, 9),
+(44, 'Elémentaire Lumière', '173435804180.webp', 0, 10),
+(45, 'Blizzard', '1734358085718.webp', 0, 10),
+(46, 'Vent violent', '1734359495365.webp', 0, 11),
+(47, 'Elementaire Eau', '173435963272.webp', 0, 11),
+(48, 'immolation', '1734359715808.webp', 0, 12),
+(49, 'Elementaire d\'air', '1734359897258.webp', 0, 13);
 
 -- --------------------------------------------------------
 
@@ -221,7 +233,7 @@ ALTER TABLE `user_element`
 -- AUTO_INCREMENT pour la table `creature`
 --
 ALTER TABLE `creature`
-  MODIFY `id_creature` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_creature` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `element`
@@ -239,7 +251,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `sort`
 --
 ALTER TABLE `sort`
-  MODIFY `id_sort` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_sort` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT pour la table `type`

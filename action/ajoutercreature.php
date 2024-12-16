@@ -16,20 +16,22 @@ if(isset($_POST["nom"])&&isset($_POST["description"])&&isset($_POST["id_type"])&
 		$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
 		if(in_array($imageExtension,$autoriseExtension)){
 			$imagecreature=time() .rand(1,1000); ".".$imageExtension;
-			move_uploaded_file($_FILES["image_creature"]["tmp_name"],"../img/creatures".$imagecreature);
+			move_uploaded_file($_FILES["image_creature"]["tmp_name"],"../img/".$imagecreature);
 		}else{
 			header ("location:/projet_academie/creature.php?actionok=1");
 		}
 	}
 
-$requestCreatType=$bdd->prepare("SELECT *
+$requestCreatureType=$bdd->prepare("SELECT c.*, t.nom AS nom_type, u.name AS username
 							FROM creature as c
 							LEFT JOIN type as t
 							ON c.id_type= t.id_type
+							LEFT JOIN user AS u
+							ON c.id_user = u.id_user
 							");
-$requestCreatType->execute([]);	
+$requestCreatureType->execute([]);
 
- $requestCreatureType=$bdd->prepare("INSERT INTO creature
+$requestCreatureType=$bdd->prepare("INSERT INTO creature
  						(nom,id_type, image_creature,description, id_user)
 						VALUE (:nom, :id_type, :image_creature, :description, :id_user)");
 $requestCreatureType->execute([

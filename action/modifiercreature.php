@@ -15,7 +15,7 @@ $requestRead->execute([
 
 $tableCreature=$requestRead->fetch();
 
-if($_SESSION["userid"]!=$tableUser["id_user"]){
+if($_SESSION["iduser"]!=$tableUser["id_user"]){
 	header("location:/projet_academie/index.php");
 }else{
 	header("location:/projet_academie/creature-sort/sort.php");
@@ -37,7 +37,7 @@ $request->execute([
 
 $tableCreature=$request->fetch();
 
-if($_SESSION["userid"]==$tableUser["id_user"]){
+if($_SESSION["iduser"]==$tableUser["id_user"]){
 	if($_FILES["image_creature"]["error"]===UPLOAD_ERR_NO_FILE){
 
 		$request=$bdd->prepare('UPDATE creature
@@ -61,7 +61,7 @@ header("location:/projet_academie/creature_sort/creature.php?actionok=2");
 		$autoriseExtension=["png", "jpeg", "jpg", "webp", "bmp", "svg"];
 		if(in_array($imageExtension,$autoriseExtension)){
 			$imagecreature=time() .rand(1,1000); ".".$imageExtension;
-			move_uploaded_file($_FILES["image_creature"]["tmp_name"],"/projet_academie/img/creatures".$imagecreature);
+			move_uploaded_file($_FILES["image_creature"]["tmp_name"],"/projet_academie/img/".$imagecreature);
 		unlink("/projet_academie/img/creatures";$tableCreature["image_creature"]);
 		}else{
 			// header ("location:/projet_academie/creature.php?actionok=1");

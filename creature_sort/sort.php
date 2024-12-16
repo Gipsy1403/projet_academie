@@ -29,6 +29,8 @@ include("../general/head.php");
 ?>
 <body>
 <?php include("../general/nav.php");?>
+
+			 ?>
 	<h1>Les sorts</h1>
 	<h3><a href="/projet_academie/action/ajoutersort.php">Créer un nouveau Sort</a></h3>
 	
@@ -36,19 +38,19 @@ include("../general/head.php");
 	<Section id="sort">
 		<?php while($tableSort=$requestSortElement->fetch()):?>
 		<article class="sort">
-			<?php 
-				
-			if($tableSort['image_sort']==NULL):?>
+			<?php if($tableSort['image_sort']==NULL):?>
 				<img src="../img/no_image.png" alt="Aucune image">
-			<?php else:?>
-				<img src="<?="../img/".$tableSort['image_sort']?>" alt="<?=$tableSort["nom"] ?>">
+				<?php else:?>
+					<img src="<?="../img/".$tableSort['image_sort']?>" alt="<?=$tableSort["nom"] ?>">
 			<?php endif;?>
-			<p><?php echo $tableSort["nom"]; ?></p>
+			<p><?php echo $tableSort["nom"];?></p>
 			<p><?php echo $tableSort["nom_element"];?></p>
 			<p>Ajouté par : <?php echo $tableSort["username"]; ?></p>
-			<p>Spécialistes</p>
-			<?php if(isset($_SESSION["userid"])):?>
-				<?php if($_SESSION["userid"]==$tableSort["id_user"]):?>
+			<p>Spécialistes <?php echo $tableSort["username"]; ?></p>
+		
+			<?php if(isset($_SESSION["iduser"])):?>
+			<?php if($_SESSION["iduser"]==$tableSort["id_user"]):?>
+		
 					<a href="/projet-academie/action/modifiersort.php?id=<?php echo $tableSort["id_sort"];?>">Modifier</a>
 					<a href="/projet-academie/action/supprimersort.php?id=<?php echo $tableSort["id_sort"];?>">Supprimer</a>
 				<?php endif;?>
