@@ -1,12 +1,15 @@
 <?php
 include("../general/function.php");
 
-$requestSortElement=$bdd->prepare("SELECT *
-				FROM sort as s
-				LEFT JOIN element as e
-				ON s.id_element= e.id_element
-				");
+$requestSortElement=$bdd->prepare("SELECT s.*, e.nom AS nom_element, u.nom AS nom_user
+                FROM sort AS s
+                LEFT JOIN element AS e
+                ON s.id_element = e.id_element
+                LEFT JOIN user AS u
+                ON s.id_user = u.id_user
+			 ");
 $requestSortElement->execute([]);
+
 
 if(isset($_GET["actionok"])){
 	$messages=[

@@ -1,10 +1,12 @@
 <?php
 include("../general/function.php");
 
-$requestCreatureType=$bdd->prepare("SELECT *
+$requestCreatureType=$bdd->prepare("SELECT c.*,t.nom AS nom_type,u.nom AS nom_user
 				FROM creature as c
 				LEFT JOIN type as t
 				ON c.id_type= t.id_type
+				LEFT JOIN user AS u
+                	ON s.id_user = u.id_user
 				");
 $requestCreatureType->execute([]);
 
